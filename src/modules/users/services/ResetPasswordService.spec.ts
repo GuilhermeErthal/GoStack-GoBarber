@@ -76,11 +76,17 @@ describe('ResetPasswordService', () => {
 
     const { token } = await fakeUserTokensRepository.generate(user.id);
 
-    expect(
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      const customDate = new Date();
+
+      return customDate.setHours(customDate.getHours() + 3);
+    });
+
+    await expect(
       resetPassword.execute({
         password: '123123',
         token,
       }),
-    );
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
