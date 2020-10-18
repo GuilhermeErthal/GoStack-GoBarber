@@ -4,7 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
+  ManyToOne,
   JoinColumn,
 } from 'typeorm';
 
@@ -18,18 +18,18 @@ class Appointment {
   @Column()
   provider_id: string;
 
-  @ManyToMany(() => User)
+  @ManyToOne(() => User)
   @JoinColumn({ name: 'provider_id' })
   provider: User;
 
   @Column()
   user_id: string;
 
-  @ManyToMany(() => User)
+  @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @Column('time with time zone')
+  @Column('timestamp with time zone')
   date: Date;
 
   @CreateDateColumn()
